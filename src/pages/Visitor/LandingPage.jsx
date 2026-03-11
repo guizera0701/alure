@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useData } from '../../context/DataContext';
 import './LandingPage.css';
+import logoImg from '../../img/logo.png';
 
 export default function LandingPage() {
   const { addRequest } = useData();
@@ -59,8 +60,9 @@ export default function LandingPage() {
           <a href="#contact" className="btn btn-primary lp-cta-btn">Solicitar Avaliação</a>
         </div>
         <div className="lp-hero-image">
-          {/* Aesthetic Placeholder for a dark minimal clinic environment */}
-          <div className="image-placeholder"></div>
+          <div className="image-placeholder">
+            <img src={logoImg} alt="Odontologia" />
+          </div>
         </div>
       </section>
 
