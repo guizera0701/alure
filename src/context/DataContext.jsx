@@ -8,8 +8,8 @@ export const useData = () => useContext(DataContext);
 const todayStr = new Date().toISOString().split('T')[0];
 
 const initialDentists = [
-  { id: 1, name: 'Dr. Arthur V.' },
-  { id: 2, name: 'Dra. Beatriz S.' }
+  { id: 1, name: 'Dr. Arthur V.', login: 'arthur', password: '123' },
+  { id: 2, name: 'Dra. Beatriz S.', login: 'beatriz', password: '123' }
 ];
 
 const initialAppointments = [
@@ -95,8 +95,8 @@ export const DataProvider = ({ children }) => {
   };
 
   // Admin / HR Flow
-  const addDentist = (name) => {
-    setDentists(prev => [...prev, { id: Date.now(), name }]);
+  const addDentist = (name, login, password) => {
+    setDentists(prev => [...prev, { id: Date.now(), name, login, password }]);
   };
   const removeDentist = (id) => {
     setDentists(prev => prev.filter(d => d.id !== id));

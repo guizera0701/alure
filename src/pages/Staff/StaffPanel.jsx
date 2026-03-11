@@ -4,7 +4,7 @@ import { useData } from '../../context/DataContext';
 import './StaffPanel.css';
 
 export default function StaffPanel() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { appointments, updateAppointmentStatus, updateAppointmentNotes } = useData();
 
   // Filter only the logged in dentist's appointments
@@ -16,9 +16,18 @@ export default function StaffPanel() {
   return (
     <div className="staff-panel animate-fade-in">
       <header className="sp-header">
-        <div className="sp-header-title">
-          <h1>Painel Odontológico</h1>
-          <p>Bem-vindo(a), <span className="text-gold">{user.name}</span></p>
+        <div className="sp-header-title" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button 
+            onClick={() => logout()}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem', color: 'inherit' }}
+            title="Voltar para Home"
+          >
+            ⬅
+          </button>
+          <div>
+            <h1>Painel Odontológico</h1>
+            <p>Bem-vindo(a), <span className="text-gold">{user.name}</span></p>
+          </div>
         </div>
         <div className="sp-header-actions">
           <button className="btn btn-secondary">Bloquear Horário</button>

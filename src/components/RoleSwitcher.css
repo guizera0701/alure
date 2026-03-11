@@ -62,8 +62,20 @@
   margin-bottom: 5px;
 }
 
-.staff-dropdown:hover .dropdown-contents {
+.dropdown-contents.open {
   display: block;
+}
+
+.dropdown-contents button.close-x {
+  text-align: right;
+  color: var(--color-accent-gold);
+  font-weight: 700;
+  border-bottom: 2px solid var(--color-border-dark);
+}
+
+.dropdown-contents button.close-x:hover {
+  background-color: transparent;
+  opacity: 0.8;
 }
 
 .dropdown-contents button {

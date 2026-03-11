@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useData } from '../../context/DataContext';
+import { useAuth } from '../../context/AuthContext';
 import './LandingPage.css';
 import logoImg from '../../img/logo.png';
 
 export default function LandingPage() {
   const { addRequest } = useData();
+  const { loginAs, switchView } = useAuth();
   const [formData, setFormData] = useState({
     user_name: '',
     contact: '',
@@ -44,8 +46,20 @@ export default function LandingPage() {
         <div className="lp-logo">Alure</div>
         <nav className="lp-nav">
           <a href="#about">A Clínica</a>
-          <a href="#services">Tratamentos</a>
+          <button 
+            onClick={() => switchView('treatments')}
+            style={{ background: 'none', border: 'none', color: 'inherit', fontWeight: '500', cursor: 'pointer', fontFamily: 'inherit', fontSize: '1rem', padding: 0 }}
+          >
+            Tratamentos
+          </button>
           <a href="#contact" className="btn btn-secondary">Agendar Agora</a>
+          <button 
+            onClick={() => loginAs('login')} 
+            className="btn" 
+            style={{ background: 'none', border: 'none', color: 'var(--color-primary-dark)', cursor: 'pointer', fontWeight: '500' }}
+          >
+            Entrar
+          </button>
         </nav>
       </header>
 

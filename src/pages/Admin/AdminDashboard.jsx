@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../../context/DataContext';
+import { useAuth } from '../../context/AuthContext';
 import './AdminDashboard.css';
 
 export default function AdminDashboard() {
@@ -12,8 +13,11 @@ export default function AdminDashboard() {
     addDentist,
     removeDentist
   } = useData();
+  const { logout } = useAuth();
 
   const [newDentistName, setNewDentistName] = useState('');
+  const [newDentistLogin, setNewDentistLogin] = useState('');
+  const [newDentistPass, setNewDentistPass] = useState('');
 
   const formatTime = (isoString) => {
     const d = new Date(isoString);
@@ -21,37 +25,62 @@ export default function AdminDashboard() {
   };
 
   const handleApprove = (requestId) => {
-    // In a real app, admin would select which dentist takes the patient.
-    // For this mock, we just try to assign it to Dentist #1 by default, or #2 if it fails?
-    // Let's implement a simple prompt or just assign to Dentist 1 for speed.
-    // Actually, let's just pick dentist 1 for the demo, since we want to show conflict resolution.
     const success = approveRequest(requestId, dentists[0]?.id);
     if (success) {
       alert('Agendamento aprovado com sucesso!');
     }
   };
 
-  const handleAddDentist = () => {
-    if (newDentistName.trim()) {
-      addDentist(newDentistName);
+  const handleAddDentist = (e) => {
+    e.preventDefault();
+    if (newDentistName.trim() && newDentistLogin.trim() && newDentistPass.trim()) {
+      addDentist(newDentistName, newDentistLogin, newDentistPass);
       setNewDentistName('');
+      setNewDentistLogin('');
+      setNewDentistPass('');
     }
   };
 
   return (
     <div className="admin-dashboard animate-fade-in">
       <header className="ad-header">
-        <h1>Gestão da Clínica</h1>
-        <div className="ad-hr-controls">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button 
+            onClick={() => logout()}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem' }}
+            title="Voltar para Home"
+          >
+            ⬅
+          </button>
+          <h1>Gestão da Clínica</h1>
+        </div>
+        <form className="ad-hr-controls" onSubmit={handleAddDentist} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <input 
             type="text" 
-            placeholder="Nome do novo Dentista" 
+            placeholder="Nome (Ex: Dr. João)" 
             value={newDentistName}
             onChange={(e) => setNewDentistName(e.target.value)}
             className="input-field-small"
+            required
           />
-          <button className="btn btn-secondary btn-small" onClick={handleAddDentist}>+ Add Staff</button>
-        </div>
+          <input 
+            type="text" 
+            placeholder="Login" 
+            value={newDentistLogin}
+            onChange={(e) => setNewDentistLogin(e.target.value)}
+            className="input-field-small"
+            required
+          />
+          <input 
+            type="text" 
+            placeholder="Senha" 
+            value={newDentistPass}
+            onChange={(e) => setNewDentistPass(e.target.value)}
+            className="input-field-small"
+            required
+          />
+          <button type="submit" className="btn btn-secondary btn-small">+ Add Staff</button>
+        </form>
       </header>
 
       <main className="ad-main">
